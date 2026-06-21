@@ -1,0 +1,15 @@
+data/
+__pycache__/
+*.py[cod]
+*.joblib
+*.parquet
+.env
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+reports/figures/
+models/

@@ -1,0 +1,67 @@
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  features_file: data/processed/features.parquet
+
+sensors:
+  high_rate:          # 100 Hz — 6000 points per 60s cycle
+    - PS1
+    - PS2
+    - PS3
+    - PS4
+    - PS5
+    - PS6
+    - EPS1
+  mid_rate:           # 10 Hz — 600 points per cycle
+    - FS1
+    - FS2
+    - TS1
+    - TS2
+    - TS3
+    - TS4
+    - VS1
+  low_rate:           # 1 Hz — 60 points per cycle
+    - SE
+    - CE
+    - CP
+
+modalities:
+  pressure: [PS1, PS2, PS3, PS4, PS5, PS6]
+  flow: [FS1, FS2]
+  temperature: [TS1, TS2, TS3, TS4]
+  vibration: [VS1]
+  power: [EPS1]
+  efficiency: [SE, CE, CP]
+
+labels:
+  columns: [cooler, valve, pump, accumulator]
+  cooler:
+    3: "close to total failure"
+    20: "reduced efficiency"
+    100: "full efficiency"
+  valve:
+    100: "optimal"
+    90: "small lag"
+    80: "severe lag"
+    73: "close to total failure"
+  pump:
+    0: "no leakage"
+    1: "weak leakage"
+    2: "severe leakage"
+  accumulator:
+    130: "optimal"
+    115: "slightly reduced"
+    100: "severely reduced"
+    90: "close to failure"
+
+features:
+  freq_domain_top_k: 20
+  freq_bands:
+    low: [0, 10]
+    mid: [10, 30]
+    high: [30, 50]
+
+models:
+  cv_folds: 5
+  random_state: 42
+  output_dir: models/
