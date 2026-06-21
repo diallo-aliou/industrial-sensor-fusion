@@ -1,4 +1,4 @@
-data/
+/data/
 __pycache__/
 *.py[cod]
 *.joblib
@@ -12,4 +12,4 @@ build/
 .pytest_cache/
 .ruff_cache/
 reports/figures/
-models/
+/models/

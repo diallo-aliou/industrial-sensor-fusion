@@ -15,12 +15,12 @@ sensors:
   mid_rate:           # 10 Hz — 600 points per cycle
     - FS1
     - FS2
+  low_rate:           # 1 Hz — 60 points per cycle
     - TS1
     - TS2
     - TS3
     - TS4
     - VS1
-  low_rate:           # 1 Hz — 60 points per cycle
     - SE
     - CE
     - CP
