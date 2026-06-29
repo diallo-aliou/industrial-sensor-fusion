@@ -20,9 +20,14 @@ _ALL_SENSORS = [
     "SE", "CE", "CP",
 ]
 
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
 
 def download_data(raw_dir: str = "data/raw") -> None:
     raw_path = Path(raw_dir)
+    if not raw_path.is_absolute():
+        raw_path = _PROJECT_ROOT / raw_path  # anchor to repo so quick-start works anywhere
+    raw_path = raw_path.resolve()
     raw_path.mkdir(parents=True, exist_ok=True)
 
     if (raw_path / "PS1.txt").exists():
@@ -46,10 +51,14 @@ def _parse_sensor_file(filepath: Path) -> np.ndarray:
 
 
 def load_raw(config_path: str = "configs/config.yaml") -> dict[str, np.ndarray]:
+    config_path = Path(config_path)
+    if not config_path.is_absolute():
+        config_path = _PROJECT_ROOT / config_path
     with open(config_path) as f:
         config = yaml.safe_load(f)
 
-    raw_dir = Path(config["data"]["raw_dir"])
+    # Resolve raw_dir relative to the config file so callers can run from any directory
+    raw_dir = (config_path.parent.parent / config["data"]["raw_dir"]).resolve()
 
     sensors: dict[str, np.ndarray] = {}
     for name in _ALL_SENSORS:
